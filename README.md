@@ -5,6 +5,13 @@ HabitRPG python library (WIP)
 
 Uses the env variables HABIT_USER_ID and HABIT_API_KEY for authentication
 
+Installation
+------------
+
+Install using pip
+
+    pip install git+git://github.com/xeross/python-habitrpg
+
 Requires
 --------
 
@@ -17,16 +24,18 @@ Set your env vars for the API
 
 call it from command line using 
 
-    ./habit.py <method> <arg1> <arg2> <...>
+    habit <method> <arg1> <arg2> <...>
 
 OR
 
-import habit
+    from habitrpg import HabitAPI
 
-    habit.[WHATEVER]
+    api = HabitAPI(<user_id>, <api_key>)
+    api.user()
+    ... # etc.
 
 Todo
 ----
 
-* Add setup.py
-* Submit to PyPI
+* Improve command line with proper help and commands
+* Add command line init command and possible .habitrc
