@@ -1,9 +1,9 @@
 from setuptools import setup, find_packages
 
 setup(
-    name = "python-habitrpg",
+    name = "pyhabit",
     description = "CLI and library to interact with HabitRPG",
-    version = "0.1a",
+    version = "0.3a",
     install_requires=[
         'distribute',
         'requests'
@@ -14,9 +14,9 @@ setup(
     license = "MIT",
     entry_points = {
         'console_scripts': [
-            'habit = habitrpg.cli:main'
+            'habit = pyhabit.cli:main'
         ]
     },
-    url = "http://github.com/xeross/python-habitrpg",
-    download_url = "https://github.com/xeross/python-habitrpg/tarball/master"
+    url = "http://github.com/xeross/pyhabit",
+    download_url = "https://github.com/xeross/pyhabit/tarball/master"
 )

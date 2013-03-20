@@ -1,4 +1,4 @@
-python-habitrpg
+pyhabit
 ===============
 
 HabitRPG python library (WIP)
@@ -10,7 +10,7 @@ Installation
 
 Install using pip
 
-    pip install git+git://github.com/xeross/python-habitrpg
+    pip install git+git://github.com/xeross/pyhabit
 
 Requires
 --------
