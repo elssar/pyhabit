@@ -44,8 +44,7 @@ class HabitAPI(object):
             'text': text,
             'completed': "true" if completed else "false",
             'value': value,
-            'note': note,
-            'direction': "down"
+            'note': note
         }
 
         return self.request("post", "user/tasks/", data=data).json()
