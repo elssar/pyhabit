@@ -53,8 +53,4 @@ class HabitAPI(object):
         return self.request("put", "user/tasks/%s" % task_id, data=text).json()
 
     def perform_task(self, task_id, direction):
-        url = "/v1/users/%s/tasks/%s/%s" % (self.user_id, task_id, direction)
-        data = json.dumps({'apiToken': self.api_key})
-        headers={'Content-Type': 'application/json'}
-
-        return self.request("post", url, data=data, headers=headers).json()
+        return self.request("post", "user/tasks/%s/%s" % (task_id, direction)).json()
