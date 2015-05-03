@@ -22,7 +22,7 @@ class HabitAPI(object):
         }
 
     def request(self, method, path, *args, **kwargs):
-        path = "%s/%s" % ("api/v1", path) if not path.startswith("/") else path[1:]
+        path = "%s/%s" % ("api/v2", path) if not path.startswith("/") else path[1:]
 
         if not "headers" in kwargs:
             kwargs["headers"] = self.auth_headers()
@@ -36,21 +36,22 @@ class HabitAPI(object):
         return self.request("get", "user/tasks").json()
 
     def task(self, task_id):
-        return self.request("get", "user/task/%s" % task_id).json()
+        return self.request("get", "user/tasks/%s" % task_id).json()
 
     def create_task(self, task_type, text, completed = False, value = 0, note = ""):
         data = {
             'type': task_type,
             'text': text,
-            'completed': completed,
+            'completed': "true" if completed else "false",
             'value': value,
-            'note': note
+            'note': note,
+            'direction': "down"
         }
 
-        return self.request("post", "user/task/%s" % task_id, data=data).json()
+        return self.request("post", "user/tasks/", data=data).json()
 
     def update_task(self, task_id, text):
-        return self.request("put", "user/task/%s" % task_id, data=text).json()
+        return self.request("put", "user/tasks/%s" % task_id, data=text).json()
 
     def perform_task(self, task_id, direction):
         url = "/v1/users/%s/tasks/%s/%s" % (self.user_id, task_id, direction)
