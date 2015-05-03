@@ -49,6 +49,17 @@ class HabitAPI(object):
 
         return self.request("post", "user/tasks/", data=data).json()
 
+    def create_habit(self, text, up = True, down = True):
+        data = {
+            'type': HabitAPI.TYPE_HABIT,
+            'text': text,
+            'completed' : 'false',
+            'up': 'true' if up else 'false',
+            'down': 'true' if down else 'false'
+        }
+
+        return self.request('post', 'user/tasks/', data=data).json()
+
     def update_task(self, task_id, text):
         return self.request("put", "user/tasks/%s" % task_id, data=text).json()
 
