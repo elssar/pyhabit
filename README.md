@@ -10,7 +10,7 @@ Installation
 
 Install using pip
 
-    pip install git+git://github.com/xeross/pyhabit
+    pip install git+git://github.com/elssar/pyhabit
 
 Requires
 --------
