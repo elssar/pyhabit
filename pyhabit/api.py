@@ -54,3 +54,64 @@ class HabitAPI(object):
 
     def perform_task(self, task_id, direction):
         return self.request("post", "user/tasks/%s/%s" % (task_id, direction)).json()
+
+    def create_tag(self, name, tag_id=None):
+        """
+        Create new tag with optional unique id.
+        It's generally best to leave the tag id blank and
+        let it be automatically generated.
+
+        :param name: name of new tag
+        :type name: str or unicode
+        :param tag_id: optional tag id
+        :type tag_id: str or unicode
+
+        usage: HabitAPI.create_tag('my awesome tag')
+        """
+
+        data = {
+            'name': name,
+        }
+        if tag_id:
+            data['id'] = tag_id
+
+        results = self.request("post", "user/tags/", data=data)
+
+        try:
+            return results.json()
+        except ValueError as e:
+            return results
+
+    def edit_tag(self, tag_id, name):
+        """
+        Edit tag name.
+
+        :param name: new name of tag
+        :type name: str or unicode
+        :param tag_id: id of tag to edit
+        :type tag_id: str or unicode
+
+        usage:
+        HabitAPI.edit_tag(
+            '5632e96f-a086-4fc7-abc1-f88a878f68a7',
+            'my better tag'
+        )
+        """
+
+        data = {
+            'name': name,
+        }
+
+        return self.request("put", "user/tags/%s" % tag_id, data=data).json()
+
+    def delete_tag(self, tag_id):
+        """
+        Delete tag.
+
+        :param tag_id: id of tag to delete
+        :type tag_id: str or unicode
+
+        usage: HabitAPI.delete_tag('5632e96f-a086-4fc7-abc1-f88a878f68a7')
+        """
+
+        return self.request("delete", "user/tags/%s" % tag_id).json()
