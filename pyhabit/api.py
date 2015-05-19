@@ -29,14 +29,24 @@ class HabitAPI(object):
 
         return getattr(requests, method)(self.base_url + path, *args, **kwargs)
 
+    def _parse_results(self, results):
+        """Try to parse json. Returns html if error."""
+        try:
+            return results.json()
+        except ValueError as e:
+            return results
+
     def user(self):
-        return self.request("get", "user").json()
+        results = self.request("get", "user")
+        return self._parse_results(results)
 
     def tasks(self):
-        return self.request("get", "user/tasks").json()
+        results = self.request("get", "user/tasks")
+        return self._parse_results(results)
 
     def task(self, task_id):
-        return self.request("get", "user/tasks/%s" % task_id).json()
+        results = self.request("get", "user/tasks/%s" % task_id)
+        return self._parse_results(results)
 
     def create_task(self, task_type, text, completed = False, value = 0, note = ""):
         data = {
@@ -47,13 +57,16 @@ class HabitAPI(object):
             'note': note
         }
 
-        return self.request("post", "user/tasks/", data=data).json()
+        results = self.request("post", "user/tasks/", data=data)
+        return self._parse_results(results)
 
     def update_task(self, task_id, text):
-        return self.request("put", "user/tasks/%s" % task_id, data=text).json()
+        results = self.request("put", "user/tasks/%s" % task_id, data=text)
+        return self._parse_results(results)
 
     def perform_task(self, task_id, direction):
-        return self.request("post", "user/tasks/%s/%s" % (task_id, direction)).json()
+        results = self.request("post", "user/tasks/%s/%s" % (task_id, direction))
+        return self._parse_results(results)
 
     def create_tag(self, name, tag_id=None):
         """
@@ -72,15 +85,12 @@ class HabitAPI(object):
         data = {
             'name': name,
         }
+
         if tag_id:
             data['id'] = tag_id
 
         results = self.request("post", "user/tags/", data=data)
-
-        try:
-            return results.json()
-        except ValueError as e:
-            return results
+        return self._parse_results(results)
 
     def edit_tag(self, tag_id, name):
         """
@@ -102,7 +112,8 @@ class HabitAPI(object):
             'name': name,
         }
 
-        return self.request("put", "user/tags/%s" % tag_id, data=data).json()
+        results = self.request("put", "user/tags/%s" % tag_id, data=data)
+        return self._parse_results(results)
 
     def delete_tag(self, tag_id):
         """
@@ -114,4 +125,5 @@ class HabitAPI(object):
         usage: HabitAPI.delete_tag('5632e96f-a086-4fc7-abc1-f88a878f68a7')
         """
 
-        return self.request("delete", "user/tags/%s" % tag_id).json()
+        results = self.request("delete", "user/tags/%s" % tag_id).json()
+        return self._parse_results(results)
