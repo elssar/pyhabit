@@ -27,11 +27,6 @@ class HabitAPI(object):
         if not "headers" in kwargs:
             kwargs["headers"] = self.auth_headers()
 
-        if 'data' in kwargs:
-            kwargs['data'] = json.dumps(kwargs['data'])
-
-        kwargs["headers"]['Content-Type'] = 'application/json'
-
         return getattr(requests, method)(self.base_url + path, *args, **kwargs)
 
     def _parse_results(self, results):
@@ -39,8 +34,6 @@ class HabitAPI(object):
         try:
             return results.json()
         except ValueError as e:
-            return results
-        except AttributeError as e:
             return results
 
     def user(self):
@@ -59,7 +52,7 @@ class HabitAPI(object):
         data = {
             'type': task_type,
             'text': text,
-            'completed': True if completed else False,
+            'completed': "true" if completed else "false",
             'value': value,
             'note': note
         }
@@ -102,9 +95,6 @@ class HabitAPI(object):
 
         results = self.request("post", "user/tags/", data=data)
         return self._parse_results(results)
-
-    def get_tags(self):
-        return self.user()['tags']
 
     def edit_tag(self, tag_id, name):
         """
