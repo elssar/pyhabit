@@ -64,6 +64,10 @@ class HabitAPI(object):
         results = self.request("put", "user/tasks/%s" % task_id, data=text)
         return self._parse_results(results)
 
+    def delete_task(self, task_id):
+        results = self.request("delete", "user/tasks/%s" % task_id)
+        return self._parse_results(results)
+
     def perform_task(self, task_id, direction):
         results = self.request("post", "user/tasks/%s/%s" % (task_id, direction))
         return self._parse_results(results)
