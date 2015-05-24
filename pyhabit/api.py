@@ -99,9 +99,6 @@ class HabitAPI(object):
         results = self.request("post", "user/tags/", data=data)
         return self._parse_results(results)
 
-    def get_tags(self):
-        return self.user()['tags']
-
     def edit_tag(self, tag_id, name):
         """
         Edit tag name.
